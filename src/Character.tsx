@@ -1,36 +1,31 @@
 import React from "react";
 import {
-  Typography,
   Link,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Typography,
 } from "@material-ui/core";
-import { Link as RouterLink } from "react-router-dom";
-import { withRouter } from "react-router";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import fetch from "./fetch";
 
-function Character(props: any) {
-  const characterId = props.match.params.characterId;
-  const { status, error, data } = useQuery(`character-${characterId}`, () =>
-    fetch(`https://swapi.dev/api/people/${characterId}/`)
+function Character() {
+  const { characterId } = useParams();
+  const { status, data } = useQuery(`character-${characterId}`, () =>
+    fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
   );
 
   if (status === "loading") return <p>Loading...</p>;
   if (status === "error") return <p>Error :(</p>;
 
-  console.info({ data, status, error });
-  const homeworldUrlParts = data.homeworld.split("/").filter(Boolean);
-  const homeworldId = homeworldUrlParts[homeworldUrlParts.length - 1];
+  const locationUrlPars = data.location.url.split("/").filter(Boolean);
+  const locationId = locationUrlPars[locationUrlPars.length - 1];
 
-  if (status !== "success") {
-    return null;
-  }
   return (
     <div>
       <Typography variant="h2">{data.name}</Typography>
@@ -44,76 +39,75 @@ function Character(props: any) {
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>Born</TableCell>
-              <TableCell>{data.birth_year}</TableCell>
+              <TableCell>Gender</TableCell>
+              <TableCell>{data.gender}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Eyes</TableCell>
-              <TableCell>{data.eye_color}</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>{data.status}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Hair</TableCell>
-              <TableCell>{data.hair_color}</TableCell>
+              <TableCell>Species</TableCell>
+              <TableCell>{data.species}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Height</TableCell>
-              <TableCell>{data.height}</TableCell>
+              <TableCell>Origin</TableCell>
+              <TableCell>{data.origin.name}</TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Mass</TableCell>
-              <TableCell>{data.mass}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>Homeworld</TableCell>
+              <TableCell>Location</TableCell>
               <TableCell>
-                <Homeworld id={homeworldId} />
+                <Location id={locationId} />
               </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
       <br />
-      <Typography variant="h4">Films</Typography>
-      {data.films.map((film: any) => {
-        const filmUrlParts = film.split("/").filter(Boolean);
-        const filmId = filmUrlParts[filmUrlParts.length - 1];
-        return <Film id={filmId} key={`Film-${filmId}`} />;
+      <Typography variant="h4">Episodes</Typography>
+      {data.episode.map((episode) => {
+        const episodeUrlParts = episode.split("/").filter(Boolean);
+        const episodeId = episodeUrlParts[episodeUrlParts.length - 1];
+
+        return <Episode id={episodeId} key={`episode-${episodeId}`} />;
       })}
     </div>
   );
 }
 
-function Film(props: any) {
-  const { id } = props;
-  const { data, status, error } = useQuery(`film-${id}`, () =>
-    fetch(`https://swapi.dev/api/films/${id}/`)
+function Episode({ id }) {
+  const { data, status } = useQuery(`episode-${id}`, () =>
+    fetch(`https://rickandmortyapi.com/api/episode/${id}`)
   );
 
   if (status !== "success") {
     return null;
   }
+
   return (
     <article key={id}>
-      <Link component={RouterLink} to={`/films/${id}`}>
+      <Link component={RouterLink} to={`/episodes/${id}`}>
         <Typography variant="h6">
-          {data.episode_id}. {data.title}
+          {data.episode}. {data.name} - {data.air_date}
         </Typography>
       </Link>
     </article>
   );
 }
 
-function Homeworld(props: any) {
-  const { id } = props;
-  const { data, status } = useQuery(`homeworld-${id}`, () =>
-    fetch(`https://swapi.dev/api/planets/${id}/`)
+function Location({ id }) {
+  const { data, status } = useQuery(`location-${id}`, () =>
+    fetch(`https://rickandmortyapi.com/api/location/${id}`)
   );
 
-  if (status !== "success") {
-    return null;
-  }
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "error") return <p>Error :(</p>;
 
-  return data.name;
+  return (
+    <>
+      {data.name} - {data.type}
+    </>
+  );
 }
 
-export default withRouter(Character);
+export default Character;

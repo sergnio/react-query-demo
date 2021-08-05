@@ -1,30 +1,26 @@
 import React from "react";
 import { Typography, Link } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
-import { withRouter } from "react-router";
+import { useParams } from "react-router";
 import { useQuery } from "react-query";
 import fetch from "./fetch";
 
-function Film(props: any) {
-  const filmId = props.match.params.filmId;
-  const { data, status, error } = useQuery(`film-${filmId}`, () =>
-    fetch(`https://swapi.dev/api/films/${filmId}/`)
+function Episode() {
+  const { episodeId } = useParams();
+  const { data, status } = useQuery(`episode-${episodeId}`, () =>
+    fetch(`https://rickandmortyapi.com/api/episode/${episodeId}`)
   );
 
   if (status === "loading") return <p>Loading...</p>;
-  // this will not be necessary when v1 is released.
-  if (data == null) {
-    console.info("this shouldn't happen but it does 2");
-    return <p>Loading...</p>;
-  }
   if (status === "error") return <p>Error :(</p>;
+
   return (
     <div>
-      <Typography variant="h2">{data.title}</Typography>
-      <Typography variant="body1">{data.opening_crawl}</Typography>
+      <Typography variant="h2">{data.name}</Typography>
+      <Typography variant="body1">{data.air_date}</Typography>
       <br />
       <Typography variant="h4">Characters</Typography>
-      {data.characters.map((character: any) => {
+      {data.characters.map((character) => {
         const characterUrlParts = character.split("/").filter(Boolean);
         const characterId = characterUrlParts[characterUrlParts.length - 1];
         return <Character id={characterId} key={characterId} />;
@@ -33,15 +29,13 @@ function Film(props: any) {
   );
 }
 
-function Character(props: any) {
-  const { id } = props;
-  const { data, status, error } = useQuery(`character-${id}`, () =>
-    fetch(`https://swapi.dev/api/people/${props.id}/`)
+function Character({ id }) {
+  const { data, status } = useQuery(`character-${id}`, () =>
+    fetch(`https://rickandmortyapi.com/api/character/${id}`)
   );
 
-  if (status !== "success") {
-    return null;
-  }
+  if (status === "loading") return <p>Loading...</p>;
+  if (status === "error") return <p>Error :(</p>;
 
   return (
     <article key={id}>
@@ -52,4 +46,4 @@ function Character(props: any) {
   );
 }
 
-export default withRouter(Film);
+export default Episode;

@@ -1,6 +1,6 @@
 import React from "react";
-import Films from "./Films";
-import Film from "./Film";
+import Episodes from "./Episodes";
+import Episode from "./Episode";
 import Characters from "./Characters";
 import Character from "./Character";
 import Home from "./Home";
@@ -17,8 +17,8 @@ export default function Layout(props: any) {
         <Link component={RouterLink} to="/">
           <Button color="primary">Home</Button>
         </Link>
-        <Link component={RouterLink} to="/films">
-          <Button color="primary">Films</Button>
+        <Link component={RouterLink} to="/episodes">
+          <Button color="primary">Episodes</Button>
         </Link>
         <Link component={RouterLink} to="/characters">
           <Button color="primary">Characters</Button>
@@ -26,11 +26,11 @@ export default function Layout(props: any) {
       </nav>
       <main className={classes.main}>
         <Switch>
-          <Route exact path="/films">
-            <Films />
+          <Route exact path="/episodes">
+            <Episodes />
           </Route>
-          <Route exact path="/films/:filmId">
-            <Film />
+          <Route exact path="/episodes/:episodeId">
+            <Episode />
           </Route>
           <Route exact path="/characters">
             <Characters />
@@ -47,10 +47,10 @@ export default function Layout(props: any) {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     margin: "0 auto",
-    padding: "16px"
+    padding: "16px",
   },
   menu: {
     margin: "0 auto",
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     backgroundColor: "#CCC",
     "& button": {
-      margin: theme.spacing(1)
-    }
-  }
+      margin: theme.spacing(1),
+    },
+  },
 }));
