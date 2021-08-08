@@ -17,6 +17,7 @@ export default function Characters() {
   return (
     <div>
       <Typography variant="h2">Characters</Typography>
+      {/*// @ts-ignore*/}
       {data.results.map((person) => {
         return (
           <article key={person.id} style={{ margin: "16px 0 0" }}>

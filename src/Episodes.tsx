@@ -19,6 +19,7 @@ export default function Episodes() {
   return (
     <div>
       <Typography variant="h2">Episodes</Typography>
+      {/*// @ts-ignore*/}
       {data.results.map((episode) => (
         <article key={episode.id}>
           <Link component={RouterLink} to={`/episodes/${episode.id}`}>

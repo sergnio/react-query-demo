@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import fetch from "./fetch";
 
 function Episode() {
+  // @ts-ignore
   const { episodeId } = useParams();
   const { data, status } = useQuery(`episode-${episodeId}`, () =>
     fetch(`https://rickandmortyapi.com/api/episode/${episodeId}`)
@@ -20,6 +21,7 @@ function Episode() {
       <Typography variant="body1">{data.air_date}</Typography>
       <br />
       <Typography variant="h4">Characters</Typography>
+      {/*// @ts-ignore*/}
       {data.characters.map((character) => {
         const characterUrlParts = character.split("/").filter(Boolean);
         const characterId = characterUrlParts[characterUrlParts.length - 1];
@@ -29,6 +31,7 @@ function Episode() {
   );
 }
 
+// @ts-ignore
 function Character({ id }) {
   const { data, status } = useQuery(`character-${id}`, () =>
     fetch(`https://rickandmortyapi.com/api/character/${id}`)

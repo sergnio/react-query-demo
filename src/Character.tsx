@@ -15,6 +15,7 @@ import { useQuery } from "react-query";
 import fetch from "./fetch";
 
 function Character() {
+  // @ts-ignore
   const { characterId } = useParams();
   const { status, data } = useQuery(`character-${characterId}`, () =>
     fetch(`https://rickandmortyapi.com/api/character/${characterId}`)
@@ -65,6 +66,7 @@ function Character() {
       </TableContainer>
       <br />
       <Typography variant="h4">Episodes</Typography>
+      {/*// @ts-ignore*/}
       {data.episode.map((episode) => {
         const episodeUrlParts = episode.split("/").filter(Boolean);
         const episodeId = episodeUrlParts[episodeUrlParts.length - 1];
@@ -74,7 +76,7 @@ function Character() {
     </div>
   );
 }
-
+// @ts-ignore
 function Episode({ id }) {
   const { data, status } = useQuery(`episode-${id}`, () =>
     fetch(`https://rickandmortyapi.com/api/episode/${id}`)
@@ -95,6 +97,7 @@ function Episode({ id }) {
   );
 }
 
+// @ts-ignore
 function Location({ id }) {
   const { data, status } = useQuery(`location-${id}`, () =>
     fetch(`https://rickandmortyapi.com/api/location/${id}`)
