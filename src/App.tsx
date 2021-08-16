@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 
 import "./styles.css";
 import Layout from "./Layout";
+import ToggleMSW from "./mocks/ToggleMSW";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ export default () => (
       <ThemeProvider theme={theme}>
         <Layout />
         <ReactQueryDevtools initialIsOpen />
+        <ToggleMSW />
       </ThemeProvider>
     </Router>
   </QueryClientProvider>

@@ -11,10 +11,6 @@ export default function Home(props: any) {
     <div>
       <Typography variant="h2">React Query Demo</Typography>
       <Typography variant="subtitle1">Using the Star Wars API</Typography>
-      <Typography variant="subtitle2">
-        (Built by <a href="https://twitter.com/Brent_m_Clark">@Brent_m_Clark</a>
-        )
-      </Typography>
       <section className={classes.main}>
         <Typography variant="h5">Why React Query?</Typography>
         <Typography variant="body1">
@@ -47,11 +43,11 @@ export default function Home(props: any) {
   );
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   main: {
     margin: "44px 0",
     "& p": {
-      margin: "12px 0 24px"
-    }
-  }
+      margin: "12px 0 24px",
+    },
+  },
 }));
