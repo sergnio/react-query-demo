@@ -1,5 +1,5 @@
-export default async function(...args: any) {
+export default async (...args: any) => {
   // @ts-ignore
   const res = await fetch(...args);
   return await res.json();
-}
+};
