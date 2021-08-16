@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ThemeProvider } from "@material-ui/core";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
@@ -11,20 +10,18 @@ import Layout from "./Layout";
 
 const queryClient = new QueryClient();
 
-export default function App() {
-  return (
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <ThemeProvider theme={theme}>
-            <Layout />
-            <ReactQueryDevtools initialIsOpen />
-          </ThemeProvider>
-        </Router>
-      </QueryClientProvider>
-  );
-}
+export default () => (
+  <QueryClientProvider client={queryClient}>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Layout />
+        <ReactQueryDevtools initialIsOpen />
+      </ThemeProvider>
+    </Router>
+  </QueryClientProvider>
+);
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     h1: {
       fontFamily: "Roboto Mono, monospace",
