@@ -6,15 +6,15 @@ import React, {
   useContext,
   useState,
 } from "react";
-import Characters from "../models/characters";
+import Character from "../models/character";
 
 interface CharactersProviderProps {
   children: ReactNode;
 }
 
 interface CharactersContextState {
-  characters: Characters[];
-  setCharacters: Dispatch<SetStateAction<Characters[]>>;
+  characters: Character[];
+  setCharacters: Dispatch<SetStateAction<Character[]>>;
 }
 
 export const CharactersContext = createContext<
@@ -22,9 +22,8 @@ export const CharactersContext = createContext<
 >(undefined);
 
 export const CharactersProvider = ({ children }: CharactersProviderProps) => {
-  const DEFAULT_CHARACTERS: Characters[] = [];
-  const [characters, setCharacters] =
-    useState<Characters[]>(DEFAULT_CHARACTERS);
+  const DEFAULT_CHARACTERS: Character[] = [];
+  const [characters, setCharacters] = useState<Character[]>(DEFAULT_CHARACTERS);
 
   return (
     <CharactersContext.Provider

@@ -8,17 +8,20 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import "./styles.css";
 import Layout from "./Layout";
 import ToggleMSW from "./mocks/ToggleMSW";
+import { CharactersProvider } from "./providers/GlobalProvider";
 
 const queryClient = new QueryClient();
 
 export default () => (
   <QueryClientProvider client={queryClient}>
     <Router>
-      <ThemeProvider theme={theme}>
-        <Layout />
-        <ReactQueryDevtools initialIsOpen />
-        <ToggleMSW />
-      </ThemeProvider>
+      <CharactersProvider>
+        <ThemeProvider theme={theme}>
+          <Layout />
+          <ReactQueryDevtools initialIsOpen />
+          <ToggleMSW />
+        </ThemeProvider>
+      </CharactersProvider>
     </Router>
   </QueryClientProvider>
 );

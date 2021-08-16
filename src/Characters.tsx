@@ -3,11 +3,11 @@ import { Typography, Link } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import useAxios from "./hooks/useAxios";
 import ApiResult from "./models/apiResult";
-import Characters from "./models/characters";
+import Character from "./models/character";
 import { useCharactersState } from "./providers/GlobalProvider";
 
 export default function Characters(props: any) {
-  const { data, fetchData, loading, error } = useAxios<ApiResult<Characters>>();
+  const { data, fetchData, loading, error } = useAxios<ApiResult<Character>>();
   const { setCharacters } = useCharactersState();
 
   useEffect(() => {

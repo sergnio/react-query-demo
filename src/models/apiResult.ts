@@ -1,4 +1,4 @@
-import Character from "./characters";
+import Character from "./character";
 
 export default interface ApiResult<T> {
   count: number;
